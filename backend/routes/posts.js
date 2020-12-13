@@ -19,18 +19,20 @@ router.get('/', authorize, (request, response) => {
     })
 });
 
-router.post('posts/', authorize,  (request, response) => {
+router.post('/', authorize,  (request, response) => {
 
     // Endpoint to create a new post
-    //Siit alla poole ei tööta hetkel see post meetod
     let params = {
+        userId: request.currentUser.id,
         text: request.post.text,
         url: request.post.media.url,
         type: request.post.media.type
     };
 
-    UserModel.create(params, () => {
-        response.status(201).json()
+    PostModel.create(params, () => {
+        response.json({
+            params
+        })
     });
 
 });
